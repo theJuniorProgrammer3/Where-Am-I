@@ -23,8 +23,7 @@ std::uniform_int_distribution<> dis(0, 2);
 std::bernoulli_distribution disB(0.8);
 
 void expand() {
-	char item[] = {'s', 'b', 'd'};
-	cond.push_back('0');
+	char item[] = {'d', 's', 'b'};
 	cond.push_back('0');
 	cond.push_back('0');
 	for(int i = 0; i < 10; i++) {
@@ -34,8 +33,28 @@ void expand() {
 		cond.push_back(item[dis(gen)]);
 		}
 	}
+}//kiri, kanan
+std::pair<int, int> findNearestDangerEntity(int curPos) {
+	int i = curPos;
+	int l = -1;
+	int r = -1;
+	while(i > 0) {
+		i--;
+		if(cond[i] == 'd') {
+			l = i;
+			break;
+		}
+	}
+	i = curPos;
+	while(i < cond.size() - 1) {
+		i++;
+		if(cond[i] == 'd') {
+			r = i;
+			break;
+		}
+	}
+	return {l, r};
 }
-
 int main() {
 	initscr();
 	start_color();
@@ -65,13 +84,31 @@ int main() {
 	int bCount = 0;
 	int inp;
 	noecho();
-	std::vector<int> entityStep;
+	std::pair<int, int> entityStepLoop = {0, 0};
 	int energyLoop = 0;
 	int energy = 20;
 	bool lose = false;
 	while(true) {
 		auto it = std::find(cond.begin(), cond.end(), 'c');
 		int index = it - cond.begin();
+		auto entPos = findNearestDangerEntity(index);
+		if(entityStepLoop.first == 10) {
+			entityStepLoop.first = 0;
+		}
+		if(entityStepLoop.second == 10) {
+			entityStepLoop.second = 0;
+		}
+		if(entPos.first != -1 && cond[entPos.first + 1] == '0' && std::abs(index - entPos.first) < 10 && entityStepLoop.first == 0) {
+			cond[entPos.first] = '0';
+			cond[entPos.first + 1] = 'd';
+		}
+			entityStepLoop.first++;
+		if(entPos.second != -1 && cond[entPos.second - 1] == '0' && std::abs(entPos.second - index) < 10 && entityStepLoop.second == 0) {
+			cond[entPos.second] = '0';
+			cond[entPos.second - 1] = 'd';
+		}
+			entityStepLoop.second++;
+		
 		if(cond[index + 1] == 'd') {
 			lose = true;
 			break;
@@ -116,12 +153,12 @@ int main() {
 			bCount++;
 			}
 		} else if(inp == 'p') {
-			if(bCount != 0) {
+			if(bCount != 0 && cond[index + 1] == '0') {
 				cond[index + 1] = 'b';
 				bCount--;
 			}
 		} else if(inp == 'o') {
-			if(bCount != 0) {
+			if(bCount != 0 && cond[index - 1] == '0') {
 				cond[index - 1] = 'b';
 				bCount--;
 			}
@@ -154,7 +191,7 @@ int main() {
 		}
 		printw("\n");
 
-		for(int j = (index < 3 ? index : index - 3); j <= ([&]() -> int {
+		for(int j = (index < 3 ? 0 : index - 3); j <= ([&]() -> int {
 				if(index >= cond.size() - 1 - 5) {
 				return cond.size() - 1;
 				} else {
