@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <vector>
 #include <algorithm>
+#include <random>
 
 std::vector<char> cond = {'b', 'b', '0', 'c', '0', '0', '0', '0', 'b', 'b', 'b', '0', '0', '0', 'd'};
 
@@ -15,6 +16,24 @@ std::pair<int, char> getNearObj(int index) {
 		i++;
 	}
 	return {i - index, exist};
+}
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_int_distribution<> dis(0, 2);
+std::bernoulli_distribution disB(0.8);
+
+void expand() {
+	char item[] = {'s', 'b', 'd'};
+	cond.push_back('0');
+	cond.push_back('0');
+	cond.push_back('0');
+	for(int i = 0; i < 10; i++) {
+		if(disB(gen)) {
+			cond.push_back('0');
+		} else {
+		cond.push_back(item[dis(gen)]);
+		}
+	}
 }
 
 int main() {
@@ -46,55 +65,79 @@ int main() {
 	int bCount = 0;
 	int inp;
 	noecho();
+	std::vector<int> entityStep;
+	int energyLoop = 0;
+	int energy = 20;
+	bool lose = false;
 	while(true) {
+		auto it = std::find(cond.begin(), cond.end(), 'c');
+		int index = it - cond.begin();
+		if(cond[index + 1] == 'd') {
+			lose = true;
+			break;
+		}
+	bool noStep = true;
 		clear();
 		inp = getch();
+		if(inp == 'q') break;
+		if(energy > 0) {
 		if(inp == KEY_RIGHT) {
-			auto it = std::find(cond.begin(), cond.end(), 'c');
-			int index = it - cond.begin();
+			if(index < cond.size() - 1) {
 			if(cond[index + 1] == '0') {
+			energy--;
+			noStep = false;
 			cond[index] = '0';
 			cond[index + 1] = 'c';
 			}
+			} else {
+			energy--;
+			noStep = false;
+			cond[index] = '0';
+				cond.push_back('c');
+				expand();
+			}
 		} else if(inp == KEY_LEFT) {
-			auto it = std::find(cond.begin(), cond.end(), 'c');
-			int index = it - cond.begin();
+			if(index > 0) {
 			if(cond[index - 1] == '0') {
+				energy--;
+				noStep = false;
 			cond[index] = '0';
 			cond[index - 1] = 'c';
 			}
+			}
 		} else if(inp == 'b') {
-			auto it = std::find(cond.begin(), cond.end(), 'c');
-			int index = it - cond.begin();
 			if(cond[index + 1] == 'b') {
 			cond[index + 1] = '0';
 			bCount++;
 			}
 		} else if(inp == 'v') {
-			auto it = std::find(cond.begin(), cond.end(), 'c');
-			int index = it - cond.begin();
 			if(cond[index - 1] == 'b') {
 			cond[index - 1] = '0';
 			bCount++;
 			}
 		} else if(inp == 'p') {
-			auto it = std::find(cond.begin(), cond.end(), 'c');
-			int index = it - cond.begin();
 			if(bCount != 0) {
 				cond[index + 1] = 'b';
 				bCount--;
 			}
 		} else if(inp == 'o') {
-			auto it = std::find(cond.begin(), cond.end(), 'c');
-			int index = it - cond.begin();
 			if(bCount != 0) {
 				cond[index - 1] = 'b';
 				bCount--;
 			}
-		} else if(inp == 'q') break;
+		} else if(inp == 'f') {
+			if(energy >= 3) {
+			energy = energy - 3;
+			if(cond[index + 2] == 'd') {
+			cond[index + 2] = '0';
+			}
+			}
+			
+		}
+		}
 
-		auto it = std::find(cond.begin(), cond.end(), 'c');
-		int index = it - cond.begin();
+		it = std::find(cond.begin(), cond.end(), 'c');
+		index = it - cond.begin();
 		auto nearest = getNearObj(index);
 		int id = 0;
 		printw("  ");
@@ -111,13 +154,44 @@ int main() {
 		}
 		printw("\n");
 
-
-		for(auto m : cond) {
-			printw((m == 'c' ? "[@]" : (m != '0' ? "[X]" : "[ ]")));
+		for(int j = (index < 3 ? index : index - 3); j <= ([&]() -> int {
+				if(index >= cond.size() - 1 - 5) {
+				return cond.size() - 1;
+				} else {
+				return index + 5;
+				}
+				})(); j++) {
+			printw((cond[j] == 'c' ? "[@]" : (cond[j] != '0' ? "[X]" : "[ ]")));
 		}
 		printw("\nBlock in inventory: %d", bCount);
+		printw("\nEnergy: %d", energy);
+
 		refresh();
+		if(noStep) {
+		if(energyLoop == 10) {
+			energyLoop = 0;
+			energy++;
+		} else {
+			energyLoop++;
+		}
+		} else {
+			energyLoop = 0;
+		}
 		napms(100);
+	}
+	if(lose) {
+		for(int a = 1; a <= 4; a++) {
+			clear();
+			attron(COLOR_PAIR(13 - ((a - 1) * 4)));
+		printw("AAAAAAAAAAAA\nYou've been ate by entity.");
+		attroff(COLOR_PAIR(13 - ((a - 1) * 4)));
+		refresh();
+		if(a == 1) {
+			napms(3000);
+		} else {
+		napms(500);
+		}
+		}
 	}
 	endwin();
 }
