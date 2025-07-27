@@ -88,10 +88,59 @@ int main() {
 	int energyLoop = 0;
 	int energy = 20;
 	bool lose = false;
+	int every3SecondEnergy = 0;
+	int energyLoop2 = 0;
+	std::vector<std::string> safeEntityMotivation = {"Even if you have difficulties here, don't give up, there is definitely a way out. Destroy.", "If you meet me, don't be scared, I here for help you.", "If you're running out of energy, don't surrender, I can give it to you.", "Next time don't answer randomly, right?", "If someone approaches you to attack you, but you run out of energy, block him."};
+	std::uniform_int_distribution<> disMot(0, safeEntityMotivation.size() - 1);
 	while(true) {
 		auto it = std::find(cond.begin(), cond.end(), 'c');
 		int index = it - cond.begin();
 		auto entPos = findNearestDangerEntity(index);
+		int ans;
+		if(cond[index + 1] == 's') {
+			clear();
+			printw("Safe Entity: Hello! Nice to meet you, need help?\nn: nope\ne: I need energy\n");
+			refresh();
+			nodelay(stdscr, FALSE);
+			ans = getch();
+			if(ans == 'e') {
+				printw("Safe Entity: You need energy? Okay, you need every 3 second one energy, or one time thirty energy?\ne: Every Second\no: One time\n");
+				refresh();
+				ans = getch();
+				if(ans == 'e') {
+				printw("Safe Entity: Okay, I will give you a power of regeneration for you.\n");
+				refresh();
+				every3SecondEnergy++;
+				napms(2000);
+				} else if(ans == 'o'){
+					printw("Safe Entity: Okay, I will give you thirty energy\n");
+					refresh();
+					energy += 30;
+					napms(2000);
+				} else {
+					printw("Safe Entity: That's not valid... Ah! I know, maybe you need motivation! Wait a minute...\n");
+					refresh();
+						napms(4000);
+					printw("Safe Entity: %s\n", safeEntityMotivation[disMot(gen)].c_str());
+					refresh();
+				}
+				printw("Done! You don't need me anymore, right? goodbye!\n");
+				refresh();
+			} else if (ans == 'n') {
+				printw("Safe Entity: Okay, goodbye!\n");
+				refresh();
+			} else {
+				printw("Safe Entity: I assumsed you don't need. goodbye!\n");
+				refresh();
+				}
+			cond[index + 1] = '0';
+				napms(3000);
+				printw("Safe Entity go away...");
+				refresh();
+				napms(3000);
+				clear();
+		}
+		nodelay(stdscr, TRUE);
 		if(entityStepLoop.first == 10) {
 			entityStepLoop.first = 0;
 		}
@@ -178,7 +227,7 @@ int main() {
 		auto nearest = getNearObj(index);
 		int id = 0;
 		printw("  ");
-		//itwnsitas dan warna:
+		//itensitas dan warna:
 		if(nearest.first <= 8) {
 		if(nearest.first <= 2) id += 12;
 		else if(nearest.first <= 4) id += 8;
@@ -213,6 +262,12 @@ int main() {
 		}
 		} else {
 			energyLoop = 0;
+		}
+		if(every3SecondEnergy > 0) {
+			if(energyLoop2 == 30) {
+				energy++;
+				energyLoop2 = 0;
+			} else energyLoop2++;
 		}
 		napms(100);
 	}
