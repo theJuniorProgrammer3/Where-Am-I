@@ -21,12 +21,14 @@ std::random_device rd;
 std::mt19937 gen(rd());
 std::uniform_int_distribution<> dis(0, 2);
 std::bernoulli_distribution disB(0.8);
+std::bernoulli_distribution time_to_spawnDE(0.03);
+std::uniform_int_distribution<> sDEdis(4, 18);
 
 void expand() {
 	char item[] = {'d', 's', 'b'};
 	cond.push_back('0');
 	cond.push_back('0');
-	for(int i = 0; i < 25; i++) {
+	for(int i = 0; i < 40; i++) {
 		if(disB(gen)) {
 			cond.push_back('0');
 		} else {
@@ -752,6 +754,9 @@ int main() {
 			clear();
 			attron(COLOR_PAIR(16 - ((a - 1) * 4)));
 	printw("Click 'c' to skip cutscene");
+	int tmp;
+	tmp = getch();
+	if(tmp == 'c') goto skip;
 		attroff(COLOR_PAIR(16 - ((a - 1) * 4)));
 		refresh();
 		if(a == 1) {
@@ -761,6 +766,7 @@ int main() {
 		}
 		}
 	cutscene();
+skip:
 	int bCount = 0;
 	int inp;
 	noecho();
@@ -768,14 +774,26 @@ int main() {
 	int energyLoop = 0;
 	int energy = 20;
 	bool lose = false;
+	bool win = false;
 	int every3SecondEnergy = 0;
 	int energyLoop2 = 0;
 	std::vector<std::string> safeEntityMotivation = {"Even if you have difficulties here, don't give up, there is definitely a way out. Destroy.", "If you meet me, don't be scared, I here for help you.", "If you're running out of energy, don't surrender, I can give it to you.", "Next time don't answer randomly, right?", "If someone approaches you to attack you, but you run out of energy, block him."};
 	std::uniform_int_distribution<> disMot(0, safeEntityMotivation.size() - 1);
 	while(true) {
+		if(bCount == 200) {
+			win = true;
+			break;
+		}
 		auto it = std::find(cond.begin(), cond.end(), 'c');
 		int index = it - cond.begin();
 		auto entPos = findNearestDangerEntity(index);
+		if(time_to_spawnDE(gen)) {
+			if(disB(gen)) {
+				cond[index - sDEdis(gen)] = 'd';
+			} else {
+				cond[index + sDEdis(gen)] = 'd';
+			}
+		}
 		int ans;
 		if(cond[index + 1] == 's') {
 			clear();
@@ -827,18 +845,18 @@ int main() {
 		if(entityStepLoop.second == 10) {
 			entityStepLoop.second = 0;
 		}
-		if(entPos.first != -1 && cond[entPos.first + 1] == '0' && std::abs(index - entPos.first) < 10 && entityStepLoop.first == 0) {
+		if(entPos.first != -1 && cond[entPos.first + 1] == '0' && std::abs(index - entPos.first) < 20 && entityStepLoop.first == 0) {
 			cond[entPos.first] = '0';
 			cond[entPos.first + 1] = 'd';
 		}
 			entityStepLoop.first++;
-		if(entPos.second != -1 && cond[entPos.second - 1] == '0' && std::abs(entPos.second - index) < 10 && entityStepLoop.second == 0) {
+		if(entPos.second != -1 && cond[entPos.second - 1] == '0' && std::abs(entPos.second - index) < 20 && entityStepLoop.second == 0) {
 			cond[entPos.second] = '0';
 			cond[entPos.second - 1] = 'd';
 		}
 			entityStepLoop.second++;
 		
-		if(cond[index + 1] == 'd') {
+		if(cond[index + 1] == 'd' || cond[index - 1] == 'd') {
 			lose = true;
 			break;
 		}
@@ -899,6 +917,13 @@ int main() {
 			}
 			}
 			
+		} else if(inp == 'd') {
+			if(energy >= 3) {
+			energy = energy - 3;
+			if(cond[index - 2] == 'd') {
+			cond[index - 2] = '0';
+			}
+			}
 		}
 		}
 
@@ -964,6 +989,19 @@ int main() {
 		napms(500);
 		}
 		}
+	} else if(win) {
+		for(int a = 4; a >= 1; a--) {
+			clear();
+			attron(COLOR_PAIR(16 - ((a - 1) * 4)));
+	printw("Yay! Now you can back into lab!");
+		attroff(COLOR_PAIR(16 - ((a - 1) * 4)));
+		refresh();
+		if(a == 1) {
+			napms(3000);
+		} else {
+		napms(500);
+		}
+		}
 	}
 	endwin();
-}
+ }
