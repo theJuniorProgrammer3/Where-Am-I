@@ -3,7 +3,24 @@
 #include <algorithm>
 #include <random>
 
-std::vector<char> cond = {'b', 'b', '0', 'c', '0', '0', '0', '0', 'b', 'b', 'b', '0', '0', '0', 'd'};
+
+
+std::random_device rd;
+std::mt19937 gen(rd());
+std::vector<char> cond(16, '0');
+std::uniform_int_distribution initPos(0, 15);
+std::uniform_int_distribution theBlockCount(1, 8);
+int blockCount = theBlockCount(gen);
+void initWorld() {
+cond[initPos(gen)] = 'c';
+while(blockCount > 0) {
+	int a = initPos(gen);
+	if(cond[a] != 'c' && cond[a] != 'b') {
+		cond[a] = 'b';
+		blockCount--;
+	}
+}
+}
 
 std::pair<int, char> getNearObj(int index) {
 	char exist = '0';
@@ -17,8 +34,6 @@ std::pair<int, char> getNearObj(int index) {
 	}
 	return {i - index, exist};
 }
-std::random_device rd;
-std::mt19937 gen(rd());
 std::uniform_int_distribution<> dis(0, 2);
 std::bernoulli_distribution disB(0.8);
 std::bernoulli_distribution time_to_spawnDE(0.03);
@@ -726,7 +741,113 @@ void cutscene() {
 
 
 }
+void cutscene2(int id, int index) {
+	clear();
+	std::string view = "";
+		for(int j = (index < 3 ? 0 : index - 3); j <= ([&]() -> int {
+				if(index >= cond.size() - 1 - 5) {
+				return cond.size() - 1;
+				} else {
+				return index + 5;
+				}
+				})(); j++) {
+			view += std::string(cond[j] == 'c' ? "[@]" : (cond[j] != '0' ? "[X]" : "[ ]")) + " ";
+		}
+		view.pop_back();
+	
+		napms(2000);
+		printw("Me: Where Am I?\n");
+		refresh();
+		napms(3000);
+		printw("Professor: In 1D World\n");
+		refresh();
+		napms(4000);
+		clear();
+		printw("Me: Why you threw me here?\n");
+		refresh();
+		napms(5000);
+		printw("Professor: Like I said, I need guinea pig. It's you\n");
+		refresh();
+		napms(7000);
+		clear();
+		printw("Me: Why you don't tell me before throw me?\n");
+		refresh();
+		napms(5000);
+		printw("Professor: I too excited, It's first my discovery\n");
+		refresh();
+		napms(7000);
+		clear();
+		printw("Me: Why you always say \"first discovery\" every your discovery? Prof, this is the 286th your discovery, not first\n");
+		refresh();
+		napms(8000);
+		printw("Professor: I don't know.\n");
+		refresh();
+		napms(3000);
+		clear();
+		printw("Me: You even don't tell me how to survival in this world\n");
+		refresh();
+		napms(5000);
+		printw("Professor: Okay, first, you need to know, your body is actually near me, only your consciousness is put there.\n");
+		refresh();
+		napms(7000);
+		clear();
+		printw("Me: If this is not my body, when I killed here, I still alive?\n");
+		refresh();
+		napms(7000);
+		printw("Professor: No, you still die. This is your consciousness, without that, you can't alive. Just fight them, don't be next to that.\n");
+		refresh();
+		napms(7000);
+		clear();
+		printw("%s\n", view.c_str());
+		napms(1000);
+		printw("Me: I see something, what's that?\n");
+		refresh();
+		napms(5000);
+		printw("Professsor: That is your environment.\n");
+		refresh();
+		napms(5000);
+		clear();
+		printw("%s\n", view.c_str());
+		printw("Me: I don't understand.\n");
+		refresh();
+		napms(3000);
+		printw("Professor: Simply put, it's a map to show you the situation around you.\n");
+		refresh();
+		napms(8000);
+		clear();
+		addch('#'| COLOR_PAIR(id));
+		printw("\n\n");
+		printw("%s\n", view.c_str());
+		refresh();
+		napms(3000);
+		printw("Me: I see something else, what's this?\n");
+		refresh();
+		napms(5000);
+		printw("Professor: It's your right indication. Green mean safe, red mean dabger, white mean you can pick it.\n");
+		refresh();
+		napms(7000);
+		clear();
+		addch('#'| COLOR_PAIR(id));
+		printw("\n\n");
+		printw("%s\n", view.c_str());
+		printw("Me: I don't understand\n");
+		refresh();
+		napms(3000);
+		printw("Professor: You'll understand. Your task is collect 200 block\n");
+		refresh();
+		napms(8000);
+		clear();
+		printw("Why I have a crazy professor.\n");
+		refresh();
+		napms(5000);
+		clear();
+}
+
+
+
+	
 int main() {
+	initWorld();
 	initscr();
 	start_color();
 	init_color(10, 250, 0, 0);
@@ -750,6 +871,24 @@ int main() {
 	init_pair(16, COLOR_WHITE, COLOR_BLACK);
 	keypad(stdscr, TRUE);
 	nodelay(stdscr, TRUE);
+	auto it = std::find(cond.begin(), cond.end(), 'c');
+	auto index = it - cond.begin();
+		auto theNearest = getNearObj(index);
+		int theId = 0;
+		printw("  ");
+		//itensitas dan warna:
+		if(theNearest.first <= 8) {
+		if(theNearest.first <= 2) theId += 12;
+		else if(theNearest.first <= 4) theId += 8;
+		else if(theNearest.first <= 6) theId += 4;
+
+		if(theNearest.second == 'b') theId += 4;
+		else if(theNearest.second == 'd') theId += 1;
+		else if(theNearest.second == 's') theId += 2;
+	printw("Click 'c' to skip cutscene");
+	int t;
+	t = getch();
+	if(t == 'c') goto skip;
 		for(int a = 1; a <= 4; a++) {
 			clear();
 			attron(COLOR_PAIR(16 - ((a - 1) * 4)));
@@ -766,6 +905,7 @@ int main() {
 		}
 		}
 	cutscene();
+	cutscene2(theId, index);
 skip:
 	int bCount = 0;
 	int inp;
@@ -784,8 +924,8 @@ skip:
 			win = true;
 			break;
 		}
-		auto it = std::find(cond.begin(), cond.end(), 'c');
-		int index = it - cond.begin();
+		it = std::find(cond.begin(), cond.end(), 'c');
+		index = it - cond.begin();
 		auto entPos = findNearestDangerEntity(index);
 		if(time_to_spawnDE(gen)) {
 			if(disB(gen)) {
@@ -927,8 +1067,6 @@ skip:
 		}
 		}
 
-		it = std::find(cond.begin(), cond.end(), 'c');
-		index = it - cond.begin();
 		auto nearest = getNearObj(index);
 		int id = 0;
 		printw("  ");
@@ -977,6 +1115,7 @@ skip:
 		napms(100);
 	}
 	if(lose) {
+		//animasi fade out
 		for(int a = 1; a <= 4; a++) {
 			clear();
 			attron(COLOR_PAIR(13 - ((a - 1) * 4)));
@@ -990,6 +1129,7 @@ skip:
 		}
 		}
 	} else if(win) {
+		//animasi fade in
 		for(int a = 4; a >= 1; a--) {
 			clear();
 			attron(COLOR_PAIR(16 - ((a - 1) * 4)));
@@ -1003,5 +1143,6 @@ skip:
 		}
 		}
 	}
+		}
 	endwin();
  }
