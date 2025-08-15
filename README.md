@@ -49,4 +49,4 @@ On-going (Temporarily, collect 200 blocks)
 ## How to Lose
 The Dangerous Entity is located directly to the right or left (1 square)
 
-English version of this game is coming soon
+Indonesian version of this game is coming soon
