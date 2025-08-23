@@ -5,7 +5,8 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 - Memberikan pengalaman unik menjelajah di dunia 1D
 - Mendapatkan energi tambahan atau motivasi dari Safe Entity
 - Mengalahkan Dangerous Entity yang muncul secara acak
-- Alur cerita yang mendalam (on working)
+- Alur cerita yang mendalam (sedang dikerjakan)
+- 2 Ending: Bad, Good, Truth ending (akan datang)
 
 ## Kontrol
 - Panah kanan untuk bergerak ke kanan
@@ -31,7 +32,8 @@ Where Am I is a 1D-based game where players become guinea pigs, tasked with expl
 - Provides a unique experience exploring a 1D world
 - Gain additional energy or motivation from the Safe Entity
 - Defeat randomly appearing Dangerous Entities
-- Immersive storyline (on-going)
+- Immersive storyline (on working)
+- 3 Ending: Bad, Good, and Truth ending (coming soon)
 
 ## Controls
 - Right arrow to move right
@@ -49,4 +51,4 @@ On-going (Temporarily, collect 200 blocks)
 ## How to Lose
 The Dangerous Entity is located directly to the right or left (1 square)
 
-Indonesian version of this game is coming soon
+Versi Indonesia belum ada.
