@@ -1,3 +1,4 @@
+
 if(entityStepLoop.first == 10) {
                         entityStepLoop.first = 0;
                 }
@@ -16,57 +17,98 @@ if(entityStepLoop.first == 10) {
                         entityStepLoop.second++;
 
                 if(cond[index + 1] == 'd' || cond[index - 1] == 'd') {
-                        lose = true;
-                        break;
+                        health -= 3;
+			if(health <= 0) {
+				lose = true;
+				break;
+			}
                 }
         bool noStep = true;
+	if(speed != 1) {
+		speedLoop++;
+	} else if(speedLoop == 3001) {
+		speed = 1;
+		speedLoop = 0;
+	}
                 clear();
                 inp = getch();
                 if(inp == 'q') break;
                 if(energy > 0) {
                 if(inp == KEY_RIGHT) {
                         if(index < cond.size() - 6) {
-                        if(cond[index + 1] == '0') {
                         energy--;
                         noStep = false;
                         cond[index] = '0';
-                        cond[index + 1] = 'c';
-                        }
+			auto collide = detectCollide(cond, index + 1, index + speed); 
+			if(collide.first == true) {
+				cond[collide.second - 1] = 'c';
+			} else {
+                        cond[index + speed] = 'c';
+			}
                         } else {
                         energy--;
                         noStep = false;
                         cond[index] = '0';
-                                cond.push_back('c');
+                                cond[index + speed] = 'c';
                                 expand();
                         }
                 } else if(inp == KEY_LEFT) {
                         if(index > 0) {
-                        if(cond[index - 1] == '0') {
                                 energy--;
                                 noStep = false;
                         cond[index] = '0';
-                        cond[index - 1] = 'c';
-                        }
+			auto collide = detectCollide(cond, index + 1, index - speed); 
+			if(collide.first == true) {
+				cond[collide.second + 1] = 'c';
+			} else {
+                        cond[index - speed] = 'c';
+			}
                         }
                 } else if(inp == 'b') {
-                        if(cond[index + 1] == 'b') {
+                        if(cond[index + 1] != '0') {
+			switch (cond[index + 1]) {
+				case 'b':
+                        		itemCount[0]++;
+					break;
+				case 'a':
+					itemCount[1]++;
+					break;
+				case 'r':
+					itemCount[2]++;
+					break;
+				case 'i':
+					itemCount[3]++;
+					break;
+			}
                         cond[index + 1] = '0';
-                        bCount++;
                         }
                 } else if(inp == 'v') {
-                        if(cond[index - 1] == 'b') {
+                        if(cond[index - 1] != '0') {
+			switch (cond[index - 1]) {
+				case 'b':
+                        		itemCount[0]++;
+					break;
+				case 'a':
+					itemCount[1]++;
+					break;
+				case 'r':
+					itemCount[2]++;
+					break;
+				case 'i':
+					itemCount[3]++;
+					break;
+			}
                         cond[index - 1] = '0';
-                        bCount++;
                         }
                 } else if(inp == 'p') {
-                        if(bCount != 0 && cond[index + 1] == '0') {
+                        if(itemCount[0] != 0 && cond[index + 1] == '0') {
                                 cond[index + 1] = 'b';
-                                bCount--;
+                                itemCount[0]--;
                         }
                 } else if(inp == 'o') {
-                        if(bCount != 0 && cond[index - 1] == '0') {
+                        if(itemCount[0] != 0 && cond[index - 1] == '0') {
                                 cond[index - 1] = 'b';
-                                bCount--;
+                                itemCount[0]--;
                         }
                 } else if(inp == 'f') {
                         if(energy >= 3) {
@@ -83,6 +125,24 @@ if(entityStepLoop.first == 10) {
                         cond[index - 2] = '0';
                         }
                         }
-                }
+                } else if(inp == '1') {
+			// makan apel: boost energy 10
+			if(itemCount[1] > 0) {
+			energy += 10;
+			itemCount[1]--;
+			}
+		} else if(inp == '2') {
+			// makan wortel: vision lebih luas
+			if(itemCount[2] > 0) {
+			expandedVision = true;
+			itemCount[2]--;
+			}
+		} else if(inp == '3') {
+			//makan cabai: lari lebih cepat dengan konsumsi energi yang sama
+			if(itemCount[3] > 0) {
+			speed += 2;
+			itemCount[3]--;
+			}
+		}
                 }
 

@@ -10,12 +10,19 @@ std::mt19937 gen(rd());
 std::vector<char> cond(16, '0');
 std::uniform_int_distribution initPos(0, 15);
 std::uniform_int_distribution theBlockCount(1, 8);
-std::uniform_int_distribution<> dis(0, 2);
+std::uniform_int_distribution<> dis(0, 5);
 std::bernoulli_distribution disB(0.8);
 std::bernoulli_distribution time_to_spawnDE(0.03);
 std::uniform_int_distribution<> sDEdis(4, 18);
 #include "world.cpp"
 #include "cutscenes.cpp"
+
+std::pair<bool, int> detectCollide(std::vector<char> vec, int from, int to) {
+	for(int i = from; i < to; (from < to ? i++ : i--)) {
+		if(vec[i] != '0') return std::pair<bool, int>(true, i);
+	}
+	return std::pair<bool, int>(false, 0);
+}
 	
 int main() {
 	initWorld();
@@ -78,7 +85,9 @@ int main() {
 	cutscene();
 	cutscene2(theId, index);
 skip:
-	int bCount = 0;
+	attron(COLOR_PAIR(16));
+	int itemCount[] = {0, 0, 0, 0};
+	//Block, Apple, caRrot, chIli
 	int inp;
 	noecho();
 	std::pair<int, int> entityStepLoop = {0, 0};
@@ -88,8 +97,13 @@ skip:
 	bool win = false;
 	int every3SecondEnergy = 0;
 	int energyLoop2 = 0;
+	bool expandedVision = false;
+	int expandedVisionLoop = 0;
+	int health = 100;
+	int speed = 1;
+	int speedLoop = 0;
 	while(true) {
-		if(bCount == 200) {
+		if(itemCount[0] == 200) {
 			win = true;
 			break;
 		}
@@ -116,15 +130,28 @@ skip:
 		printw("\n");
 
 		for(int j = (index < 3 ? 0 : index - 3); j <= ([&]() -> int {
-				if(index >= cond.size() - 1 - 5) {
+				if(index >= cond.size() - 1 - (expandedVision ? 15 : 5)) {
 				return cond.size() - 1;
 				} else {
-				return index + 5;
+				return index + (expandedVision ? 15 : 5);
 				}
 				})(); j++) {
 			printw((cond[j] == 'c' ? "[@]" : (cond[j] != '0' ? "[X]" : "[ ]")));
+			if(expandedVision) {
+			expandedVisionLoop += 1;
+			if(expandedVisionLoop == 30001) {
+			//setelah 5 menit
+			expandedVision = false;
+			expandedVisionLoop = 0;
+			}
+			}
 		}
-		printw("\nBlock in inventory: %d", bCount);
+		printw("\nHealth: %d", health);
+		printw("\nInventory:");
+		printw("\nBlock: %d", itemCount[0]);
+		printw("\nApple: %d", itemCount[1]);
+		printw("\nCarrot: %d", itemCount[2]);
+		printw("\nChili: %d", itemCount[3]);
 		printw("\nEnergy: %d", energy);
 
 		refresh();

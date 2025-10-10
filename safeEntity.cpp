@@ -4,12 +4,12 @@
 				int ans;
 if(cond[index + 1] == 's') {
                         clear();
-                        printw("Safe Entity: Hello! Nice to meet you, need help?\nn: nope\ne: I need energy\n");
+                        printw("Safe Entity: Hello! Nice to meet you, need help?\nn: nope\ny: yes\n");
                         refresh();
                         nodelay(stdscr, FALSE);
                         ans = getch();
-                        if(ans == 'e') {
-                                printw("Safe Entity: You need energy? Okay, you need every 3 second one energy, or one time thirty energy?\ne: Every 3 Second option\no: One time option\n");
+                        if(ans == 'y') {
+                                printw("Safe Entity: You need help? Okay, you need every 3 second one energy, or one time thirty energy, or even want more health?\ne: Every 3 Second option\no: One time option\nh: health\nm: Motivation\n");
                                 refresh();
                                 ans = getch();
                                 if(ans == 'e') {
@@ -22,14 +22,27 @@ if(cond[index + 1] == 's') {
                                         refresh();
                                         energy += 30;
                                         napms(2000);
-                                } else {
+                                } else if (ans == 'h') {
+				printw("Safe Entity: I will give you 40 health\n");
+				refresh();
+				napms(3000);
+				health += 40;
+				printw("Done!\n");
+				refresh();
+			} else if (ans == 'm') {
+				printw("Safe Entity: Motivation, ya? Wait a minute...\n");
+				refresh();
+				napms(3000);
+				printw("Safe Entity: %s\n", safeEntityMotivation[disMot(gen)].c_str());
+				refresh();
+			} else {
                                         printw("Safe Entity: That's not valid... Ah! I know, maybe you need motivation! Wait a minute...\n");
                                         refresh();
                                                 napms(4000);
                                         printw("Safe Entity: %s\n", safeEntityMotivation[disMot(gen)].c_str());
                                         refresh();
                                 }
-                                printw("Done! You don't need me anymore, right? goodbye!\n");
+                                printw("Safe Entity: Done! You don't need me anymore, right? goodbye!\n");
                                 refresh();
                         } else if (ans == 'n') {
                                 printw("Safe Entity: Okay, goodbye!\n");
