@@ -39,7 +39,7 @@ if(entityStepLoop.first == 10) {
                         energy--;
                         noStep = false;
                         cond[index] = '0';
-			auto collide = detectCollide(cond, index + 1, index + speed); 
+			auto collide = detectCollide(cond, index + 1, index + speed + 1); 
 			if(collide.first == true) {
 				cond[collide.second - 1] = 'c';
 			} else {
@@ -57,7 +57,7 @@ if(entityStepLoop.first == 10) {
                                 energy--;
                                 noStep = false;
                         cond[index] = '0';
-			auto collide = detectCollide(cond, index + 1, index - speed); 
+			auto collide = detectCollide(cond, index + 1, index - speed - 1); 
 			if(collide.first == true) {
 				cond[collide.second + 1] = 'c';
 			} else {
@@ -113,17 +113,25 @@ if(entityStepLoop.first == 10) {
                 } else if(inp == 'f') {
                         if(energy >= 3) {
                         energy = energy - 3;
+			if(cond[index + 1] == '0') {
                         if(cond[index + 2] == 'd') {
                         cond[index + 2] = '0';
                         }
+			} else if(cond[index + 1] == 'd') {
+				cond[index + 1] = '0';
+			}
                         }
 
                 } else if(inp == 'd') {
                         if(energy >= 3) {
                         energy = energy - 3;
+			if(cond[index - 1] == '0') {
                         if(cond[index - 2] == 'd') {
                         cond[index - 2] = '0';
                         }
+			} else if(cond[index - 1] == 'd') {
+				cond[index - 1] = '0';
+			}
                         }
                 } else if(inp == '1') {
 			// makan apel: boost energy 10

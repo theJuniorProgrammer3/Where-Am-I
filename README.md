@@ -6,7 +6,7 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 - Mendapatkan energi tambahan atau motivasi dari Safe Entity
 - Mengalahkan Dangerous Entity yang muncul secara acak
 - Alur cerita yang mendalam (sedang dikerjakan)
-- 2 Ending: Bad, Good, Truth ending (akan datang)
+- 3 Ending: Bad, Good, Truth ending (akan datang)
 - Ending yang kompleks (akan datang)
 - Makanan: Apel, Wortel, dan Cabai
 - Sistem health
@@ -16,20 +16,20 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 - Panah kiri untuk bergerak ke kiri
 - Tombol 'b' untuk mengambil item di bagian kanan
 - Tombol 'v' untuk mengambil item di bagian kiri
-- Tombol 'p' untuk meletakkan item di bagian kanan
-- Tombol 'o' untuk meletakkan item di bagian kiri
-- Tombol 'f' untuk mengalahkan Dangerous Entity di bagian kanan (2 petak)
-- Tombol 'd' untuk mengalahkan Dangerous Entity di bagian kiri (2 petak)
+- Tombol 'p' untuk meletakkan blok di bagian kanan
+- Tombol 'o' untuk meletakkan blok di bagian kiri
+- Tombol 'f' untuk mengalahkan Dangerous Entity di bagian kanan (jarak hingga 2 petak)
+- Tombol 'd' untuk mengalahkan Dangerous Entity di bagian kiri (jarak hingga 2 petak)
 - Tombol '1' untuk memakan apel (boost energi 10)
 - Tombol '2' untuk memakan wortel (pandangan lebih luas)
 - Tombol '3' untuk memakan cabai (lari lebih cepat dengan konsumsi energi yang sama)
 -
 
 ## Cara menang
-On working (Temporarily, collect 200 blocks)
+Kumpulkan 200 blok (?)
 
 ## Cara kalah
-Tepat di kanan atau kiri (1 petak) terdapat Dangerous Entity
+kehabisan nyawa
 
 # English Version
 # Where Am I
@@ -50,18 +50,18 @@ Where Am I is a 1D-based game where players become guinea pigs, tasked with expl
 - Left arrow to move left
 - 'b' key to pick up an item on the right
 - 'v' key to pick up an item on the left
-- 'p' key to place an item on the right
-- 'o' key to place an item on the left
-- 'f' key to defeat the Dangerous Entity on the right (2 squares)
-- 'd' key to defeat the Dangerous Entity on the left (2 squares)
+- 'p' key to place a block on the right
+- 'o' key to place a block on the left
+- 'f' key to defeat the Dangerous Entity on the right (up to 2 squares)
+- 'd' key to defeat the Dangerous Entity on the left (up to 2 squares)
 - '1' button to eat apple (energy boost 10)
 - '2' button to eat carrots (wider view)
 - '3' button to eat chili (run faster with the same energy consumption)
 
 ## How to Win
-On-going (Temporarily, collect 200 blocks)
+Collect 200 blocks (?)
 
 ## How to Lose
-The Dangerous Entity is located directly to the right or left (1 square)
+Out of health
 
 Versi Indonesia belum ada.

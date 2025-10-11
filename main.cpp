@@ -47,6 +47,7 @@ int main() {
 	init_pair(14, COLOR_GREEN, COLOR_BLACK);
 	init_pair(15, COLOR_BLUE, COLOR_BLACK);
 	init_pair(16, COLOR_WHITE, COLOR_BLACK);
+	init_pair(17, COLOR_BLACK, COLOR_RED);
 	keypad(stdscr, TRUE);
 	nodelay(stdscr, TRUE);
 	auto it = std::find(cond.begin(), cond.end(), 'c');
@@ -103,7 +104,7 @@ skip:
 	int speed = 1;
 	int speedLoop = 0;
 	while(true) {
-		if(itemCount[0] == 200) {
+		if(itemCount[0] == 200 && inp == 'e') {
 			win = true;
 			break;
 		}
@@ -137,6 +138,7 @@ skip:
 				}
 				})(); j++) {
 			printw((cond[j] == 'c' ? "[@]" : (cond[j] != '0' ? "[X]" : "[ ]")));
+		}
 			if(expandedVision) {
 			expandedVisionLoop += 1;
 			if(expandedVisionLoop == 30001) {
@@ -145,7 +147,6 @@ skip:
 			expandedVisionLoop = 0;
 			}
 			}
-		}
 		printw("\nHealth: %d", health);
 		printw("\nInventory:");
 		printw("\nBlock: %d", itemCount[0]);
@@ -187,6 +188,7 @@ skip:
 		napms(500);
 		}
 		}
+		badEnding();
 	} else if(win) {
 		//animasi fade in
 		for(int a = 4; a >= 1; a--) {
@@ -201,6 +203,7 @@ skip:
 		napms(500);
 		}
 		}
+		goodEnding();
 	}
 		}
 	endwin();
