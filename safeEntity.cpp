@@ -1,5 +1,15 @@
 
-				    std::vector<std::string> safeEntityMotivation = {"Even if you have difficulties here, don't give up, there is definitely a way out. Destroy.", "If you meet me, don't be scared, I here for help you.", "If you're running out of energy, don't surrender, I can give it to you.", "Next time don't answer randomly, right?", "If someone approaches you to attack you, but you run out of energy, block him."};
+				    std::vector<std::string> safeEntityMotivation = {
+					    "Even if you have difficulties here, don't give up, there is definitely a way out. Destroy."
+						    , "If you meet me, don't be scared, I here for help you."
+						    , "If you're running out of energy, don't surrender, I can give it to you."
+						    , "Next time don't answer randomly, right?"
+						    , "If someone approaches you to attack you, but you run out of energy, block him."
+				    , "Heal yourself!"
+				    , "Run as fast as you can if anyone is chasing you here."
+				    , "No matter your strategy is greedy or wisely, the important thing is that you succeed."
+				    , "Feel free to request (with permission, of course)."
+				    };
 				std::uniform_int_distribution<> disMot(0, safeEntityMotivation.size() - 1);
 				int ans;
 if(cond[index + 1] == 's') {

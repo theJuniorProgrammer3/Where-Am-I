@@ -1,8 +1,8 @@
 
-if(entityStepLoop.first == 10) {
+if(entityStepLoop.first >= 10) {
                         entityStepLoop.first = 0;
                 }
-                if(entityStepLoop.second == 10) {
+                if(entityStepLoop.second >= 10) {
                         entityStepLoop.second = 0;
                 }
                 if(entPos.first != -1 && cond[entPos.first + 1] == '0' && std::abs(index - entPos.first) < 20 && entityStepLoop.first == 0) {
@@ -10,14 +10,16 @@ if(entityStepLoop.first == 10) {
                         cond[entPos.first + 1] = 'd';
                 }
                         entityStepLoop.first++;
+			if(phase2) entityStepLoop.first += 3; // 4 kali lipat lebih cepat
                 if(entPos.second != -1 && cond[entPos.second - 1] == '0' && std::abs(entPos.second - index) < 20 && entityStepLoop.second == 0) {
                         cond[entPos.second] = '0';
                         cond[entPos.second - 1] = 'd';
                 }
                         entityStepLoop.second++;
+			if(phase2) entityStepLoop.second += 3; // 4 kali lipat lebih cepat
 
                 if(cond[index + 1] == 'd' || cond[index - 1] == 'd') {
-                        health -= 3;
+                        health -= (phase2 ? 15 : 3);
 			if(health <= 0) {
 				lose = true;
 				break;

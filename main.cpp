@@ -14,6 +14,7 @@ std::uniform_int_distribution<> dis(0, 5);
 std::bernoulli_distribution disB(0.8);
 std::bernoulli_distribution time_to_spawnDE(0.03);
 std::uniform_int_distribution<> sDEdis(4, 18);
+std::uniform_int_distribution<> quotesIntervalDis(50, 1200);
 #include "world.cpp"
 #include "cutscenes.cpp"
 
@@ -103,9 +104,38 @@ skip:
 	int health = 100;
 	int speed = 1;
 	int speedLoop = 0;
+	bool truth = false;
+	bool phase2 = false;
+	int quoteLoop = 0;
+	int quoteInterval = 0;
+	int curQI;
+	std::vector<std::string> profQuotes = {
+		"Spirit!"
+		, "Don't give up!"
+		, "I sure you can do it!"
+		, "Ask Safe Entity for help!"
+		, "Maintain stamina!"
+	};
+	std::vector<std::string> profQuotesPhase2 = {
+		"Why you can?"
+		, "I don't expect you can do it."
+		, "Whoa! You're stronger than my expectations!"
+		, "Still collecting?"
+		, "You still survive? Respect..."
+	};
+	std::string curQuote;
+	std::uniform_int_distribution<> disPQ(0, profQuotes.size() - 1);
+	std::uniform_int_distribution<> disPQ2(0, profQuotesPhase2.size() - 1);
+	// phase 3 coming soon...
 	while(true) {
-		if(itemCount[0] == 200 && inp == 'e') {
+		if(!phase2 && itemCount[0] == 170) {
+			cutscene3();
+			phase2 = true;
+		} else if(itemCount[0] == 200 && inp == 'e') {
 			win = true;
+			break;
+		} else if(itemCount[0] == 256 && inp == 'e') {
+			truth = true;
 			break;
 		}
 		it = std::find(cond.begin(), cond.end(), 'c');
@@ -126,6 +156,7 @@ skip:
 		if(nearest.second == 'b') id += 4;
 		else if(nearest.second == 'd') id += 1;
 		else if(nearest.second == 's') id += 2;
+		else id += 3; // apple, carrot, and chili (?)
 		addch('#'| COLOR_PAIR(id));
 		}
 		printw("\n");
@@ -154,6 +185,26 @@ skip:
 		printw("\nCarrot: %d", itemCount[2]);
 		printw("\nChili: %d", itemCount[3]);
 		printw("\nEnergy: %d", energy);
+		if(quoteLoop < 70) {
+		if(phase2) {
+			if(curQuote == "") curQuote = profQuotesPhase2[disPQ2(gen)];
+			printw("\n%s", curQuote.c_str());
+			quoteLoop++;
+		} else {
+			if(curQuote == "") curQuote = profQuotes[disPQ(gen)];
+			printw("\n%s", curQuote.c_str());
+			quoteLoop++;
+		}
+		} else {
+			curQI = quotesIntervalDis(gen);
+			if(quoteInterval < curQI) {
+				quoteInterval++;
+			} else {
+				quoteInterval = 0;
+				quoteLoop = 0;
+				curQuote = "";
+			}
+		}
 
 		refresh();
 		if(noStep) {
@@ -168,7 +219,7 @@ skip:
 		}
 		if(every3SecondEnergy > 0) {
 			if(energyLoop2 == 30) {
-				energy++;
+				energy += every3SecondEnergy;
 				energyLoop2 = 0;
 			} else energyLoop2++;
 		}
@@ -204,6 +255,11 @@ skip:
 		}
 		}
 		goodEnding();
+	} else if(truth) {
+		clear();
+		printw("Truth Ending. (Coming soon...)");
+		refresh();
+		napms(3000);
 	}
 		}
 	endwin();

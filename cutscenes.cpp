@@ -1184,3 +1184,51 @@ void badEnding() {
 
 }
 
+void truthEnding();
+
+void cutscene3() {
+	clear();
+	refresh();
+	napms(3000);
+	printw("Professor: My system detects Dangerous Entities will be more aggressive. Be Careful.\n");
+	refresh();
+	napms(5000);
+	printw("Me: Why you threw me here?\n");
+	refresh();
+	napms(1000);
+	clear();
+	printw("Professor: Because I too excited.\n");
+	refresh();
+	napms(5000);
+	printw("Me: Prof, how long do you want to answer like that?\n");
+	refresh();
+	napms(5000);
+	clear();
+	printw("Professor: As long as I want.\n");
+	refresh();
+	napms(3000);
+	clear();
+	printw("Me: Ah, yeah. Of course.\n");
+	refresh();
+	napms(4000);
+	printw("Professor: Any question?\n");
+	refresh();
+	napms(3000);
+	clear();
+	printw("Me: How to kill them efficiently?\n");
+	refresh();
+	napms(500);
+	printw("Professor: I think not. Okay, goodbye!\n");
+	refresh();
+	napms(3000);
+	clear();
+	printw("Me: How to kill them efficiently?\n");
+	refresh();
+	napms(3000);
+	clear();
+	printw("I don't think he used to be this evil.\n");
+	refresh();
+	napms(5000);
+	clear();
+}
+
