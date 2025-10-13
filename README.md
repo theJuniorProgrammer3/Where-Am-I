@@ -6,8 +6,8 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 - Mendapatkan energi tambahan atau motivasi dari Safe Entity
 - Mengalahkan Dangerous Entity yang muncul secara acak
 - Alur cerita yang mendalam (sedang dikerjakan)
-- 3 Ending: Bad, Good, Truth ending (akan datang)
-- Ending yang kompleks (akan datang)
+- 3 Ending: Bad, Good, Truth ending
+- Ending yang kompleks
 - Makanan: Apel, Wortel, dan Cabai
 - Sistem health
 
@@ -26,7 +26,7 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 -
 
 ## Cara menang
-Kumpulkan 200 blok (?)
+Kumpulkan 200 blok dan tekan 'e' (?)
 
 ## Cara kalah
 kehabisan nyawa
@@ -40,8 +40,8 @@ Where Am I is a 1D-based game where players become guinea pigs, tasked with expl
 - Gain additional energy or motivation from the Safe Entity
 - Defeat randomly appearing Dangerous Entities
 - Immersive storyline (on working)
-- 3 Ending: Bad, Good, and Truth ending (coming soon)
-- Complex ending (coming soon)
+- 3 Ending: Bad, Good, and Truth ending
+- Complex ending
 - Foods: Apple, Carrot and Chili
 - Health system
 
@@ -59,7 +59,7 @@ Where Am I is a 1D-based game where players become guinea pigs, tasked with expl
 - '3' button to eat chili (run faster with the same energy consumption)
 
 ## How to Win
-Collect 200 blocks (?)
+Collect 200 blocks and press 'e' (?)
 
 ## How to Lose
 Out of health

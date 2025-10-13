@@ -257,9 +257,9 @@ skip:
 		goodEnding();
 	} else if(truth) {
 		clear();
-		printw("Truth Ending. (Coming soon...)");
 		refresh();
-		napms(3000);
+		napms(5000);
+		truthEnding();
 	}
 		}
 	endwin();
