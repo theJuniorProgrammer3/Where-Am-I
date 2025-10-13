@@ -255,11 +255,15 @@ skip:
 		}
 		}
 		goodEnding();
+		napms(3000);
+		credit();
 	} else if(truth) {
 		clear();
 		refresh();
 		napms(5000);
 		truthEnding();
+		napms(3000);
+		credit();
 	}
 		}
 	endwin();
