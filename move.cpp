@@ -10,16 +10,18 @@ if(entityStepLoop.first >= 10) {
                         cond[entPos.first + 1] = 'd';
                 }
                         entityStepLoop.first++;
-			if(phase2) entityStepLoop.first += 3; // 4 kali lipat lebih cepat
+			if(phase2) entityStepLoop.first++; // 2 kali lipat lebih cepat
+			if(phase3) entityStepLoop.first += 2; // 4 kali lipat lebih cepat
                 if(entPos.second != -1 && cond[entPos.second - 1] == '0' && std::abs(entPos.second - index) < 20 && entityStepLoop.second == 0) {
                         cond[entPos.second] = '0';
                         cond[entPos.second - 1] = 'd';
                 }
                         entityStepLoop.second++;
-			if(phase2) entityStepLoop.second += 3; // 4 kali lipat lebih cepat
+			if(phase2) entityStepLoop.second++; // 2 kali lebih cepat
+			if(phase3) entityStepLoop.second += 2; // 4 kali lipat lebih cepat
 
                 if(cond[index + 1] == 'd' || cond[index - 1] == 'd') {
-                        health -= (phase2 ? 15 : 3);
+                        health -= (phase3 ? 30 : (phase2 ? 15 : 3));
 			if(health <= 0) {
 				lose = true;
 				break;
@@ -37,33 +39,31 @@ if(entityStepLoop.first >= 10) {
                 if(inp == 'q') break;
                 if(energy > 0) {
                 if(inp == KEY_RIGHT) {
-                        if(index < cond.size() - 6) {
+			auto collide = detectCollide(cond, index + 1, index + speed + 1);
+				// '+ 1' agar saat blok tepat di index + speed tetap terdeteksi
+			if(collide.second - 1 != index) {
                         energy--;
                         noStep = false;
                         cond[index] = '0';
-			auto collide = detectCollide(cond, index + 1, index + speed + 1); 
 			if(collide.first == true) {
 				cond[collide.second - 1] = 'c';
 			} else {
                         cond[index + speed] = 'c';
 			}
-                        } else {
-                        energy--;
-                        noStep = false;
-                        cond[index] = '0';
-                                cond[index + speed] = 'c';
-                                expand();
-                        }
+			}
+			if(index < cond.size() - 6) expand();
                 } else if(inp == KEY_LEFT) {
                         if(index > 0) {
+			auto collide = detectCollide(cond, index - 1, index - speed - 1); 
+			if(collide.second + 1 != index) {
                                 energy--;
                                 noStep = false;
                         cond[index] = '0';
-			auto collide = detectCollide(cond, index + 1, index - speed - 1); 
 			if(collide.first == true) {
 				cond[collide.second + 1] = 'c';
 			} else {
                         cond[index - speed] = 'c';
+			}
 			}
                         }
                 } else if(inp == 'b') {

@@ -19,7 +19,7 @@ std::uniform_int_distribution<> quotesIntervalDis(50, 1200);
 #include "cutscenes.cpp"
 
 std::pair<bool, int> detectCollide(std::vector<char> vec, int from, int to) {
-	for(int i = from; i < to; (from < to ? i++ : i--)) {
+	for(int i = from; (from < to ? i < to : i > to); (from < to ? i++ : i--)) {
 		if(vec[i] != '0') return std::pair<bool, int>(true, i);
 	}
 	return std::pair<bool, int>(false, 0);
@@ -106,15 +106,20 @@ skip:
 	int speedLoop = 0;
 	bool truth = false;
 	bool phase2 = false;
+	bool phase3 = false;
 	int quoteLoop = 0;
 	int quoteInterval = 0;
 	int curQI;
+	bool bad2 = false;
+	bool se = false;
 	std::vector<std::string> profQuotes = {
 		"Spirit!"
 		, "Don't give up!"
 		, "I sure you can do it!"
 		, "Ask Safe Entity for help!"
 		, "Maintain stamina!"
+		, "Want some foods?"
+		, "Be careful."
 	};
 	std::vector<std::string> profQuotesPhase2 = {
 		"Why you can?"
@@ -122,22 +127,43 @@ skip:
 		, "Whoa! You're stronger than my expectations!"
 		, "Still collecting?"
 		, "You still survive? Respect..."
+		, "Wow?"
+		, "I did'nt realize this happen."
+		, "I can't believe this happened."
+	};
+	std::vector<std::string> profQuotesPhase3 = {
+		"DIE!"
+		, "PESLKSH SOWYHI!"
+		, "STOP!"
+		, "STOP IT!"
+		, "YOU WILL RECEIVE THE CONSEQUENCES!"
+		, "AKWISH YOSNSY KOANJAW IT?"
+		, "NOOO!"
 	};
 	std::string curQuote;
 	std::uniform_int_distribution<> disPQ(0, profQuotes.size() - 1);
 	std::uniform_int_distribution<> disPQ2(0, profQuotesPhase2.size() - 1);
-	// phase 3 coming soon...
+	std::uniform_int_distribution<> disPQ3(0, profQuotesPhase3.size() - 1);
+	itemCount[0] = 201;
 	while(true) {
 		if(!phase2 && itemCount[0] == 170) {
 			cutscene3();
 			phase2 = true;
+		} else if (!phase3 && itemCount[0] == 201) {
+			phase3 = true;
 		} else if(itemCount[0] == 200 && inp == 'e') {
 			win = true;
 			break;
 		} else if(itemCount[0] == 256 && inp == 'e') {
 			truth = true;
 			break;
-		}
+		} else if(itemCount[0] > 200 && itemCount[0] < 256 && inp == 'e') {
+			bad2 = true;
+			break;
+		 } else if(itemCount[0] > 256 && inp == 'e') {
+			 se = true;
+			 break;
+		 }
 		it = std::find(cond.begin(), cond.end(), 'c');
 		index = it - cond.begin();
 		auto entPos = findNearestDangerEntity(index);
@@ -186,7 +212,11 @@ skip:
 		printw("\nChili: %d", itemCount[3]);
 		printw("\nEnergy: %d", energy);
 		if(quoteLoop < 70) {
-		if(phase2) {
+		if(phase3) {
+			if(curQuote == "") curQuote = profQuotesPhase3[disPQ3(gen)];
+			printw("\n%s", curQuote.c_str());
+			quoteLoop++;
+		} else if(phase2) {
 			if(curQuote == "") curQuote = profQuotesPhase2[disPQ2(gen)];
 			printw("\n%s", curQuote.c_str());
 			quoteLoop++;
@@ -262,6 +292,22 @@ skip:
 		refresh();
 		napms(5000);
 		truthEnding();
+		napms(3000);
+		credit();
+	} else if(bad2) {
+		clear();
+		refresh();
+		napms(5000);
+		badEnding2();
+		napms(3000);
+		credit();
+	} else if(se){
+		clear();
+		printw("Secret ending.\n");
+		refresh();
+		napms(3000);
+		printw("Me: Where Am I?\n");
+		refresh();
 		napms(3000);
 		credit();
 	}
