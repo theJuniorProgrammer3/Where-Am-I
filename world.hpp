@@ -31,7 +31,11 @@ void expand() {
 		if(disB(gen)) {
 			cond.push_back('0');
 		} else {
-		cond.push_back(item[dis(gen)]);
+			if(disTB(gen)) {
+				cond.push_back('b');
+			} else {
+				cond.push_back(item[dis(gen)]);
+			}
 		}
 	}
 }//kiri, kanan

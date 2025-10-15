@@ -150,6 +150,7 @@ if(entityStepLoop.first >= 10) {
 		} else if(inp == '3') {
 			//makan cabai: lari lebih cepat dengan konsumsi energi yang sama
 			if(itemCount[3] > 0) {
+			adrenalinePower = true;
 			speed += 2;
 			itemCount[3]--;
 			}
