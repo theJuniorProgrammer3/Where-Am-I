@@ -15,8 +15,8 @@ std::bernoulli_distribution disB(0.8);
 std::bernoulli_distribution time_to_spawnDE(0.03);
 std::uniform_int_distribution<> sDEdis(4, 18);
 std::uniform_int_distribution<> quotesIntervalDis(50, 1200);
-#include "world.cpp"
-#include "cutscenes.cpp"
+#include "world.hpp"
+#include "cutscenes.hpp"
 
 std::pair<bool, int> detectCollide(std::vector<char> vec, int from, int to) {
 	for(int i = from; (from < to ? i < to : i > to); (from < to ? i++ : i--)) {
@@ -166,8 +166,8 @@ skip:
 		it = std::find(cond.begin(), cond.end(), 'c');
 		index = it - cond.begin();
 		auto entPos = findNearestDangerEntity(index);
-#include "safeEntity.cpp"
-#include "move.cpp"
+#include "safeEntity.hpp"
+#include "move.hpp"
 
 		auto nearest = getNearObj(index);
 		int id = 0;
