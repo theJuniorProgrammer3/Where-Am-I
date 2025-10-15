@@ -144,7 +144,6 @@ skip:
 	std::uniform_int_distribution<> disPQ(0, profQuotes.size() - 1);
 	std::uniform_int_distribution<> disPQ2(0, profQuotesPhase2.size() - 1);
 	std::uniform_int_distribution<> disPQ3(0, profQuotesPhase3.size() - 1);
-	itemCount[0] = 201;
 	while(true) {
 		if(!phase2 && itemCount[0] == 170) {
 			cutscene3();
