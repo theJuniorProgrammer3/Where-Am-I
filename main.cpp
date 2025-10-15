@@ -13,7 +13,7 @@ std::uniform_int_distribution theBlockCount(1, 8);
 std::uniform_int_distribution<> dis(0, 5);
 std::bernoulli_distribution disB(0.8);
 std::uniform_int_distribution<> quotesIntervalDis(50, 1200);
-std::uniform_int_distribution<> disTB(0.7); // probabilitas block muncul
+std::bernoulli_distribution<> disTB(0.7); // probabilitas block muncul
 #include "world.hpp"
 #include "cutscenes.hpp"
 
@@ -206,7 +206,7 @@ skip:
 			}
 			if(adrenalinePower) {
 			adrenalinePowerLoop += 1;
-			if(adrenalinePower == 600) {
+			if(adrenalinePowerLoop == 600) {
 			//setelah 1 menit
 			speed = 1;
 			adrenalinePower = false;
