@@ -23,7 +23,17 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 - Tombol '1' untuk memakan apel (boost energi 10)
 - Tombol '2' untuk memakan wortel (pandangan lebih luas)
 - Tombol '3' untuk memakan cabai (lari lebih cepat dengan konsumsi energi yang sama)
--
+
+## Lainnya
+
+### Instalasi
+`make`
+
+### Jalankan
+`./wai` (sesuaikan dengan output file)
+
+### Kompabilitas
+Bisa dijalankan pada Linux, Android (dengan emulator terminal seperti Termux), dan Windows (tidak dites).
 
 ## Cara menang
 Kumpulkan 200 blok dan tekan 'e' (?)
@@ -57,6 +67,17 @@ Where Am I is a 1D-based game where players become guinea pigs, tasked with expl
 - '1' button to eat apple (energy boost 10)
 - '2' button to eat carrots (wider view)
 - '3' button to eat chili (run faster with the same energy consumption)
+
+## Others
+
+### Installation
+`make`
+
+### Run
+`./wai` (adjust to the output file)
+
+### Compatibility
+Can be run on Linux, Android (with a terminal emulator such as Termux), and Windows (not tested).
 
 ## How to Win
 Collect 200 blocks and press 'e' (?)

@@ -1,4 +1,8 @@
+#ifdef _WIN32
+#include <curses.h>
+#else
 #include <ncurses.h>
+#endif
 #include <vector>
 #include <algorithm>
 #include <random>
@@ -7,13 +11,13 @@
 
 std::random_device rd;
 std::mt19937 gen(rd());
-std::vector<char> cond(16, '0');
-std::uniform_int_distribution initPos(0, 15);
-std::uniform_int_distribution theBlockCount(1, 8);
+std::vector<char> cond(25, '0');
+std::uniform_int_distribution<> initPos(0, 15);
+std::uniform_int_distribution<> theBlockCount(1, 8);
 std::uniform_int_distribution<> dis(0, 5);
 std::bernoulli_distribution disB(0.8);
 std::uniform_int_distribution<> quotesIntervalDis(50, 1200);
-std::bernoulli_distribution<> disTB(0.7); // probabilitas block muncul
+std::bernoulli_distribution disTB(0.7); // probabilitas block muncul
 #include "world.hpp"
 #include "cutscenes.hpp"
 
@@ -27,7 +31,10 @@ std::pair<bool, int> detectCollide(std::vector<char> vec, int from, int to) {
 int main() {
 	initWorld();
 	initscr();
+	if(!has_colors()) printw("Warning: Your terminal doesn't supports colors");
+	// gak ada else? Saya malas ubah keseluruhan kode untuk itu.
 	start_color();
+	if(can_change_color()) {
 	init_color(10, 250, 0, 0);
         init_color(11, 0, 250, 0);
         init_color(12, 0, 0, 250);
@@ -42,6 +49,21 @@ int main() {
         init_color(21, 750, 750, 750);
 	for(int i = 10; i <= 21; i++) {
 		init_pair(i - 9, i, COLOR_BLACK);
+	}
+	} else {
+		if(has_colors()) printw("Warning: Your terminal only supports limited colors");
+	init_pair(10, COLOR_RED, COLOR_BLACK);
+	init_pair(14, COLOR_RED, COLOR_BLACK);
+	init_pair(18, COLOR_RED, COLOR_BLACK);
+	init_pair(11, COLOR_GREEN, COLOR_BLACK);
+	init_pair(15, COLOR_GREEN, COLOR_BLACK);
+	init_pair(19, COLOR_GREEN, COLOR_BLACK);
+	init_pair(12, COLOR_BLUE, COLOR_BLACK);
+	init_pair(16, COLOR_BLUE, COLOR_BLACK);
+	init_pair(20, COLOR_BLUE, COLOR_BLACK);
+	init_pair(13, COLOR_WHITE, COLOR_BLACK);
+	init_pair(17, COLOR_WHITE, COLOR_BLACK);
+	init_pair(21, COLOR_WHITE, COLOR_BLACK);
 	}
 	init_pair(13, COLOR_RED, COLOR_BLACK);
 	init_pair(14, COLOR_GREEN, COLOR_BLACK);
@@ -64,12 +86,7 @@ int main() {
 		if(theNearest.second == 'b') theId += 4;
 		else if(theNearest.second == 'd') theId += 1;
 		else if(theNearest.second == 's') theId += 2;
-	printw("Click 'c' to skip cutscene");
-	int t;
-	t = getch();
-	if(t == 'c') goto skip;
 		for(int a = 1; a <= 4; a++) {
-			clear();
 			attron(COLOR_PAIR(16 - ((a - 1) * 4)));
 	printw("Click 'c' to skip cutscene");
 	int tmp;
@@ -78,10 +95,11 @@ int main() {
 		attroff(COLOR_PAIR(16 - ((a - 1) * 4)));
 		refresh();
 		if(a == 1) {
-			napms(3000);
+			napms(5000);
 		} else {
 		napms(500);
 		}
+		clear();
 		}
 	cutscene();
 	cutscene2(theId, index);

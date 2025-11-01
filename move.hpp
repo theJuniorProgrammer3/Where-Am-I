@@ -51,7 +51,7 @@ if(entityStepLoop.first >= 10) {
                         cond[index + speed] = 'c';
 			}
 			}
-			if(index < cond.size() - 6) expand();
+			if(index >= cond.size() - 6) expand();
                 } else if(inp == KEY_LEFT) {
                         if(index > 0) {
 			auto collide = detectCollide(cond, index - 1, index - speed - 1); 
