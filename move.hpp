@@ -81,6 +81,9 @@ if(entityStepLoop.first >= 10) {
 				case 'i':
 					itemCount[3]++;
 					break;
+				case 'p':
+					itemCount[4]++;
+					break;
 			}
                         cond[index + 1] = '0';
                         }
@@ -98,6 +101,9 @@ if(entityStepLoop.first >= 10) {
 					break;
 				case 'i':
 					itemCount[3]++;
+					break;
+				case 'p':
+					itemCount[4]++;
 					break;
 			}
                         cond[index - 1] = '0';
@@ -138,21 +144,30 @@ if(entityStepLoop.first >= 10) {
                 } else if(inp == '1') {
 			// makan apel: boost energy 10
 			if(itemCount[1] > 0) {
-			energy += 10;
+			energy += 15;
 			itemCount[1]--;
 			}
 		} else if(inp == '2') {
 			// makan wortel: vision lebih luas
 			if(itemCount[2] > 0) {
+			energy += 3;
 			expandedVision = true;
 			itemCount[2]--;
 			}
 		} else if(inp == '3') {
 			//makan cabai: lari lebih cepat dengan konsumsi energi yang sama
 			if(itemCount[3] > 0) {
+			energy += 3;
 			adrenalinePower = true;
 			speed += 2;
 			itemCount[3]--;
+			}
+		} else if(inp == '4') {
+			// makan nanas: nambah health 2
+			if(itemCount[4] > 0) {
+				energy += 3;
+				health += 2;
+				itemCount[4]--;
 			}
 		}
                 }

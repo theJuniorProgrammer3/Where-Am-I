@@ -6,6 +6,7 @@
 #include <vector>
 #include <algorithm>
 #include <random>
+#include "mainMenu.hpp"
 
 
 
@@ -14,7 +15,7 @@ std::mt19937 gen(rd());
 std::vector<char> cond(25, '0');
 std::uniform_int_distribution<> initPos(0, 15);
 std::uniform_int_distribution<> theBlockCount(1, 8);
-std::uniform_int_distribution<> dis(0, 5);
+std::uniform_int_distribution<> dis(0, 6);
 std::bernoulli_distribution disB(0.8);
 std::uniform_int_distribution<> quotesIntervalDis(50, 1200);
 std::bernoulli_distribution disTB(0.7); // probabilitas block muncul
@@ -52,25 +53,27 @@ int main() {
 	}
 	} else {
 		if(has_colors()) printw("Warning: Your terminal only supports limited colors");
-	init_pair(10, COLOR_RED, COLOR_BLACK);
-	init_pair(14, COLOR_RED, COLOR_BLACK);
-	init_pair(18, COLOR_RED, COLOR_BLACK);
-	init_pair(11, COLOR_GREEN, COLOR_BLACK);
-	init_pair(15, COLOR_GREEN, COLOR_BLACK);
-	init_pair(19, COLOR_GREEN, COLOR_BLACK);
-	init_pair(12, COLOR_BLUE, COLOR_BLACK);
-	init_pair(16, COLOR_BLUE, COLOR_BLACK);
-	init_pair(20, COLOR_BLUE, COLOR_BLACK);
-	init_pair(13, COLOR_WHITE, COLOR_BLACK);
-	init_pair(17, COLOR_WHITE, COLOR_BLACK);
-	init_pair(21, COLOR_WHITE, COLOR_BLACK);
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(5, COLOR_RED, COLOR_BLACK);
+	init_pair(9, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_GREEN, COLOR_BLACK);
+	init_pair(6, COLOR_GREEN, COLOR_BLACK);
+	init_pair(10, COLOR_GREEN, COLOR_BLACK);
+	init_pair(3, COLOR_BLUE, COLOR_BLACK);
+	init_pair(7, COLOR_BLUE, COLOR_BLACK);
+	init_pair(11, COLOR_BLUE, COLOR_BLACK);
+	init_pair(4, COLOR_WHITE, COLOR_BLACK);
+	init_pair(8, COLOR_WHITE, COLOR_BLACK);
+	init_pair(12, COLOR_WHITE, COLOR_BLACK);
 	}
 	init_pair(13, COLOR_RED, COLOR_BLACK);
 	init_pair(14, COLOR_GREEN, COLOR_BLACK);
 	init_pair(15, COLOR_BLUE, COLOR_BLACK);
 	init_pair(16, COLOR_WHITE, COLOR_BLACK);
 	init_pair(17, COLOR_BLACK, COLOR_RED);
+	init_pair(18, COLOR_BLACK, COLOR_WHITE);
 	keypad(stdscr, TRUE);
+	menu();
 	nodelay(stdscr, TRUE);
 	auto it = std::find(cond.begin(), cond.end(), 'c');
 	auto index = it - cond.begin();
@@ -105,8 +108,8 @@ int main() {
 	cutscene2(theId, index);
 skip:
 	attron(COLOR_PAIR(16));
-	int itemCount[] = {0, 0, 0, 0};
-	//Block, Apple, caRrot, chIli
+	int itemCount[] = {0, 0, 0, 0, 0};
+	//Block, Apple, caRrot, chIli, Pineapple
 	int inp;
 	noecho();
 	std::pair<int, int> entityStepLoop = {0, 0};
@@ -237,6 +240,7 @@ skip:
 		printw("\nApple: %d", itemCount[1]);
 		printw("\nCarrot: %d", itemCount[2]);
 		printw("\nChili: %d", itemCount[3]);
+		printw("\nPineaple: %d", itemCount[4]);
 		printw("\nEnergy: %d", energy);
 		if(quoteLoop < 70) {
 		if(phase3) {

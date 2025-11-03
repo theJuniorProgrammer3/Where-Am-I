@@ -1,3 +1,8 @@
+## Help Wanted
+I'm seeking Windows users to test this game and share feedback.
+Please report any issues by creating an issue.
+Thanks for helping improve Where-Am-I!
+
 # Where Am I
 Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percobaan, ditugaskan eksplorasi di sebuah dunia 1D yang ditemukan oleh seorang profesor. Kumpulkan resource, kelola energi, kalahkan Dangerous Entity, dan dibimbing oleh Safe Entity dengan motivasi dan pemberian energinya.
 
@@ -8,7 +13,8 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 - Alur cerita yang mendalam (sedang dikerjakan)
 - 3 Ending: Bad, Good, Truth ending
 - Ending yang kompleks
-- Makanan: Apel, Wortel, dan Cabai
+- Makanan: Apel, Wortel, Cabai, dan Nanas
+- Semua makanan menambah energi 3 (kecuali apel)
 - Sistem health
 
 ## Kontrol
@@ -23,6 +29,7 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 - Tombol '1' untuk memakan apel (boost energi 10)
 - Tombol '2' untuk memakan wortel (pandangan lebih luas)
 - Tombol '3' untuk memakan cabai (lari lebih cepat dengan konsumsi energi yang sama)
+- Tombol '4' untuk memakan nanas (menyembuhkan health)
 
 ## Lainnya
 
@@ -52,7 +59,8 @@ Where Am I is a 1D-based game where players become guinea pigs, tasked with expl
 - Immersive storyline (on working)
 - 3 Ending: Bad, Good, and Truth ending
 - Complex ending
-- Foods: Apple, Carrot and Chili
+- Foods: Apple, Carrot, Chili, and Pineapple
+- All foods can add 3 energy, except apple.
 - Health system
 
 ## Controls
@@ -67,6 +75,7 @@ Where Am I is a 1D-based game where players become guinea pigs, tasked with expl
 - '1' button to eat apple (energy boost 10)
 - '2' button to eat carrots (wider view)
 - '3' button to eat chili (run faster with the same energy consumption)
+- '4' button to eat pineapple (healing)
 
 ## Others
 

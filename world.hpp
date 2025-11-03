@@ -24,7 +24,7 @@ std::pair<int, char> getNearObj(int index) {
 }
 
 void expand() {
-	char item[] = {'d', 's', 'b', 'a', 'r', 'i'};
+	char item[] = {'d', 's', 'b', 'a', 'r', 'i', 'p'};
 	cond.push_back('0');
 	cond.push_back('0');
 	for(int i = 0; i < 40; i++) {
