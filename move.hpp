@@ -36,7 +36,12 @@ if(entityStepLoop.first >= 10) {
 	}
                 clear();
                 inp = getch();
-                if(inp == 'q') break;
+                if(inp == 'q') {
+			save(theAcv); 
+			// fitur mendatang: achievement di gameplay
+			// future feature: reach achievement on gameplay
+			break;
+		}
                 if(energy > 0) {
                 if(inp == KEY_RIGHT) {
 			auto collide = detectCollide(cond, index + 1, index + speed + 1);

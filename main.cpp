@@ -6,6 +6,8 @@
 #include <vector>
 #include <algorithm>
 #include <random>
+#include <fstream>
+using namespace std;
 #include "mainMenu.hpp"
 
 
@@ -73,6 +75,7 @@ int main() {
 	init_pair(17, COLOR_BLACK, COLOR_RED);
 	init_pair(18, COLOR_BLACK, COLOR_WHITE);
 	keypad(stdscr, TRUE);
+	noecho();
 	menu();
 	nodelay(stdscr, TRUE);
 	auto it = std::find(cond.begin(), cond.end(), 'c');
@@ -111,7 +114,6 @@ skip:
 	int itemCount[] = {0, 0, 0, 0, 0};
 	//Block, Apple, caRrot, chIli, Pineapple
 	int inp;
-	noecho();
 	std::pair<int, int> entityStepLoop = {0, 0};
 	int energyLoop = 0;
 	int energy = 20;
@@ -134,6 +136,7 @@ skip:
 	int curQI;
 	bool bad2 = false;
 	bool se = false;
+	vector<int> theAcv = load();
 	std::vector<std::string> profQuotes = {
 		"Spirit!"
 		, "Don't give up!"
@@ -286,8 +289,21 @@ skip:
 		}
 		napms(100);
 	}
+	auto iel = [&theAcv](int v) {
+		if(theAcv[0] != 0) {
+			if(find(theAcv.begin(), theAcv.end(), v)  == theAcv.end()) {
+				theAcv.push_back(v);
+			}
+		} else {
+			theAcv[0] = v;
+		}
+		// jika theAcv == 0
+		// if theAcv == 0
+	}; // insert endings, lambda
 	if(lose) {
 		//animasi fade out
+		iel(1);
+		save(theAcv);
 		for(int a = 1; a <= 4; a++) {
 			clear();
 			attron(COLOR_PAIR(13 - ((a - 1) * 4)));
@@ -303,6 +319,8 @@ skip:
 		badEnding();
 	} else if(win) {
 		//animasi fade in
+		iel(2);
+		save(theAcv);
 		for(int a = 4; a >= 1; a--) {
 			clear();
 			attron(COLOR_PAIR(16 - ((a - 1) * 4)));
@@ -319,6 +337,8 @@ skip:
 		napms(3000);
 		credit();
 	} else if(truth) {
+		iel(4);
+		save(theAcv);
 		clear();
 		refresh();
 		napms(5000);
@@ -326,6 +346,8 @@ skip:
 		napms(3000);
 		credit();
 	} else if(bad2) {
+		iel(3);
+		save(theAcv);
 		clear();
 		refresh();
 		napms(5000);
@@ -333,6 +355,8 @@ skip:
 		napms(3000);
 		credit();
 	} else if(se){
+		iel(5);
+		save(theAcv);
 		clear();
 		printw("Secret ending.\n");
 		refresh();
