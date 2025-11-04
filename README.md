@@ -16,6 +16,9 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 - Makanan: Apel, Wortel, Cabai, dan Nanas
 - Semua makanan menambah energi 3 (kecuali apel)
 - Sistem health
+- Achievements
+- Sistem simpan dan muat untuk achievements.
+- Tanya jawab umum (sedang dikerjakan)
 
 ## Kontrol
 - Panah kanan untuk bergerak ke kanan
@@ -62,6 +65,9 @@ Where Am I is a 1D-based game where players become guinea pigs, tasked with expl
 - Foods: Apple, Carrot, Chili, and Pineapple
 - All foods can add 3 energy, except apple.
 - Health system
+- Achievements
+- Save and load system for achievements.
+- Frequently Q&A (on working).
 
 ## Controls
 - Right arrow to move right
