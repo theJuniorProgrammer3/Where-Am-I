@@ -4,6 +4,8 @@
 #include <ncurses.h>
 #endif
 #include <vector>
+#include <unordered_map>
+#include <string>
 #include <algorithm>
 #include <random>
 #include <fstream>
