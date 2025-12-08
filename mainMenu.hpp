@@ -8,15 +8,17 @@ vector<int> load() {
 		}
 	} else {
 		tmp.push_back(0);
+		tmp.push_back(0);
 	}
 	file.close();
 	return tmp;
 }
-void save(vector<int> data) {
+void save(vector<int> data, int dies) {
 	std::ofstream file(".data.txt");
 	for(auto piece : data) {
 		file << piece << " ";
 	}
+	file << "\n" << dies;
 	file.close();
 }
 
@@ -30,24 +32,48 @@ vector<pair<string, string>> getAvailableQa() {
 	if(find(theAcv.begin(), theAcv.end(), 1) != theAcv.end()) {
 		tmp.push_back({"Why Dangerous Entity eats 'Me'?", "That's its job."});
 		tmp.push_back({"Who is Dangerous Entity?", "Its is an Entity (:P)"});
+		tmp.push_back({"Why don't Dangerous Entities just eat foods?", "It's same with you, why you eat bread? Delicious? Not really."});
 	}
 	if(find(theAcv.begin(), theAcv.end(), 2) != theAcv.end()) {
 		tmp.push_back({"Why didn't the professor look happy when I came back?", "Something is wrong here."});
 		tmp.push_back({"Why did the Dangerous Entity become more aggressive when I collected 170 blocks?", "Someone is disappointed."});
+		tmp.push_back({"Why Safe Entity recomend me to collect 256 block instead of 200?", "Why don't you try it yourself?"});
+		tmp.push_back({"Why professor compliments 'Me'?", "How hard to survive on unknown world?!!"});
+		tmp.push_back({"Why professor always excited with his discovery?", "I don't know, it's professor's secret, ssh."});
 	}
 	if(find(theAcv.begin(), theAcv.end(), 3) != theAcv.end()) {
 		tmp.push_back({"What happens with the player in Bad Ending 2?", "It dies."});
 		tmp.push_back({"SCP-256? What's that?", "Follow the advice from Safe Entity."});
+		tmp.push_back({"What did the professor do?", "He is do bloody things to 'Me'."});
+		tmp.push_back({"Why professor do that?", "Because something wrong here."});
+		tmp.push_back({"'[CENCORED]'? Why?", "Are you want to look that action?"});
 	}
 	if(find(theAcv.begin(), theAcv.end(), 4) != theAcv.end()) {
 		tmp.push_back({"Why professor can forgot?", "Everyone can forget."});
 		tmp.push_back({"What happens with SCP-256 in Truth Ending?", "It was gone from existence."});
+		tmp.push_back({"Who is SCP-255?", "AHHH! Wait for it."});
+		tmp.push_back({"Is professor 'Me''s father?", "Didn't you read the cutscenes?"});
+		// not :P
+		// ugh, weird: "'Me''s"
+		tmp.push_back({"What do professors plan pranks for?", "Everyone wants to joke, right?"});
 	}
 	if(find(theAcv.begin(), theAcv.end(), 5) != theAcv.end()) {
 		tmp.push_back({"What the Secrect Ending mean?", "I don't know either."});
 		tmp.push_back({"1D + 1D = ?","It is equal to 'You play Where Am I twice'."});
+		tmp.push_back({"Why 'Where Am I?'?", "Because 'There you are.'."});
 	}
-	// initial q&a
+	if(find(theAcv.begin(), theAcv.end(), 6) != theAcv.end()) {
+		tmp.push_back({"Why 'Me' got a lot of dies?", "This is a game, right?"});
+		tmp.push_back({"It's hurt when 'Me' eaten by Dangerous Entiy?", "How about you?"});
+		tmp.push_back({"Who is professor?", "He is a scientist."});
+	};
+	if(find(theAcv.begin(), theAcv.end(), 7) != theAcv.end()) {
+		tmp.push_back({"Why 'Me' got VERY lot of dies?", "It's EXTREMLY... , y'know."});
+		tmp.push_back({"Who is SCP-255?", "Wait for Why Am Here game. I think you bored here. This game even not released yet!"});
+		// Saya bahkan belum merencanakan bagaimana gamenya
+		// I even don't planning how the game look yet
+		tmp.push_back({"Is the player hack save data?", "This is probably YES. But if no.... WOW?!"});
+	}
 	return tmp; 
 }
 
@@ -117,6 +143,7 @@ void qa() {
 
 void acv() {
 	auto data = load();
+	data.pop_back(); // delete dies
 	clear();
 	attroff(COLOR_PAIR(18));
 	if(data[0] == 0) {
@@ -129,9 +156,11 @@ void acv() {
 			{2, "Good ending"},
 			{3, "Bad ending 2"},
 			{4, "Truth ending"},
-			{5, "Secret ending"}
-			// untuk versi ini, hanya ending dulu
-			// for this version, only endings are exists
+			{5, "Secret ending"},
+			{6, "Hundred dies"},
+			{7, "Million dies"}
+			// sedang diperbanyak
+			// on expanding
 		};
 		while(true) {
 			clear();

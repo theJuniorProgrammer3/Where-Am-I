@@ -18,7 +18,7 @@ Where Am I adalah sebuah game berbasis 1D, dimana pemain menjadi kelinci percoba
 - Sistem health
 - Achievements
 - Sistem simpan dan muat untuk achievements.
-- Tanya jawab umum (sedang dikerjakan)
+- Tanya jawab (tidak) umum (sedang dikerjakan)
 
 ## Kontrol
 - Panah kanan untuk bergerak ke kanan
@@ -67,7 +67,7 @@ Where Am I is a 1D-based game where players become guinea pigs, tasked with expl
 - Health system
 - Achievements
 - Save and load system for achievements.
-- Frequently Q&A (on working).
+- (Not) Frequently Q&A (on working).
 
 ## Controls
 - Right arrow to move right

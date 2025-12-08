@@ -37,7 +37,7 @@ if(entityStepLoop.first >= 10) {
                 clear();
                 inp = getch();
                 if(inp == 'q') {
-			save(theAcv); 
+			save(theAcv, dieCount); 
 			// fitur mendatang: achievement di gameplay
 			// future feature: reach achievement on gameplay
 			break;

@@ -1,0 +1,4 @@
+I made this to make bugs more manageable
+
+1. Overflow everywhere, like dieCount and world
+2. Q&A, I should make it paged

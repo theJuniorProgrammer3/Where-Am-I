@@ -138,7 +138,9 @@ skip:
 	int curQI;
 	bool bad2 = false;
 	bool se = false;
+	int dieCount = load().back(); // tough if '0' (early), it's still '0'.
 	vector<int> theAcv = load();
+	theAcv.pop_back(); // remove die count
 	std::vector<std::string> profQuotes = {
 		"Spirit!"
 		, "Don't give up!"
@@ -302,10 +304,16 @@ skip:
 		// jika theAcv == 0
 		// if theAcv == 0
 	}; // insert endings, lambda
+	if(dieCount == 100) {
+		iel(6);
+	} else if(dieCount == 1000000) {
+		iel(7);
+	}
 	if(lose) {
-		//animasi fade out
+		dieCount++;
 		iel(1);
-		save(theAcv);
+		//animasi fade out
+		save(theAcv, dieCount);
 		for(int a = 1; a <= 4; a++) {
 			clear();
 			attron(COLOR_PAIR(13 - ((a - 1) * 4)));
@@ -322,7 +330,7 @@ skip:
 	} else if(win) {
 		//animasi fade in
 		iel(2);
-		save(theAcv);
+		save(theAcv, dieCount);
 		for(int a = 4; a >= 1; a--) {
 			clear();
 			attron(COLOR_PAIR(16 - ((a - 1) * 4)));
@@ -340,7 +348,7 @@ skip:
 		credit();
 	} else if(truth) {
 		iel(4);
-		save(theAcv);
+		save(theAcv, dieCount);
 		clear();
 		refresh();
 		napms(5000);
@@ -348,17 +356,18 @@ skip:
 		napms(3000);
 		credit();
 	} else if(bad2) {
+		dieCount++;
 		iel(3);
-		save(theAcv);
+		save(theAcv, dieCount);
 		clear();
 		refresh();
 		napms(5000);
 		badEnding2();
 		napms(3000);
 		credit();
-	} else if(se){
+	} else if(se) {
 		iel(5);
-		save(theAcv);
+		save(theAcv, dieCount);
 		clear();
 		printw("Secret ending.\n");
 		refresh();

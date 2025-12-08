@@ -9,6 +9,8 @@
 				    , "Run as fast as you can if anyone is chasing you here."
 				    , "No matter your strategy is greedy or wisely, the important thing is that you succeed."
 				    , "Feel free to request (with permission, of course)."
+				    , "Give up is a bad decision"
+				    , "Prepare yourself, don't be surprised if you meet Dangerous Entity."
 				    };
 				std::vector<std::string> safeEntityWarn = {
 					"Do you already know that? That's right."
@@ -16,6 +18,8 @@
 					, "That's not professor. Be careful."
 					, "Collect 256 blocks, to end all this."
 					, "Dangerous Entity is more aggressive. Be careful"
+					, "Listen to me, please. Memorize my warn. And make a decision."
+					, "Hope you can keep collecting until 256 block. The best wish for you."
 				};
 				std::uniform_int_distribution<> disMot(0, safeEntityMotivation.size() - 1);
 				std::uniform_int_distribution<> SEWDis(0, safeEntityWarn.size() - 1);
