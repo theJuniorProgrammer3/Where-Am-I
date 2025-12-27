@@ -25,7 +25,7 @@ jobs:
     - name: Build with clang++
       shell: msys2 {0}
       run: |
-        clang++ -std=c++11 main.cpp -o wai.exe -lpdcurses
+        clang++ -std=c++11 main.cpp -o wai.exe -I$MINGW_PREFIX/include -lpdcurses
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
