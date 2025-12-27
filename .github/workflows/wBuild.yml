@@ -1,0 +1,34 @@
+name: Build Windows EXE (clang++)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+
+    - name: Install LLVM with MSYS2
+      uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          mingw-w64-x86_64-clang
+          mingw-w64-x86_64-pdcurses
+
+    - name: Build with clang++
+      shell: msys2 {0}
+      run: |
+        clang++ -std=c++11 main.cpp -o wai.exe -lpdcurses
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: wai-windows-exe
+        path: wai.exe
