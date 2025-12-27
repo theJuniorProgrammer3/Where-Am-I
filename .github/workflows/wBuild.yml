@@ -28,7 +28,7 @@ jobs:
         clang++ -std=c++11 main.cpp -o wai.exe -lpdcurses
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: wai-windows-exe
         path: wai.exe
